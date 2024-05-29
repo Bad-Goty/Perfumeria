@@ -11,12 +11,15 @@ const pool = new Pool({
     host: 'dpg-cp6bs9u3e1ms73a8cfv0-a.oregon-postgres.render.com',
     database: 'perfumeria_oriu',
     password: 'WR2Ikz8jXkDiw97QlVLAEz070tyVGbtd',
-    port: 5432
+    port: 5432,
+    ssl: {
+        rejectUnauthorized: false, // Agrega esta línea para habilitar SSL
+    }
 });
 
 app.get('/api/getData', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM usuarios'); // Cambia 'your_table' por tu tabla real
+    const result = await pool.query('SELECT * FROM usuarios');
     res.json(result.rows);
   } catch (err) {
     console.error('Error executing query:', err);
@@ -28,3 +31,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
